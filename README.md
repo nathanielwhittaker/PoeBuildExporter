@@ -5,23 +5,22 @@ Reads Path of Exile builds from [pobb.in](https://pobb.in) URLs, queries the PoE
 ## Requirements
 
 - Java 17+
-- Maven (to build)
 - A valid `POESESSID` cookie from pathofexile.com
 
 ## Setup
 
 On first launch, `properties/BaseUserConfig.properties` is created automatically from the example file. Fill in your `POESESSID` and league name(s) there, or set them directly from the GUI after launching.
 
-## Building
+## Running
+
+Double-click `PoeBuildExporter.bat` to launch. If the app exits with an error the console will stay open — check `logs/poebuildexporter.log` for details.
+
+## Building from source
+
+Requires Maven.
 
 ```
 mvn package
-```
-
-## Running
-
-```
-java -jar target/PoeBuildExporter-1.0-SNAPSHOT.jar
 ```
 
 ---

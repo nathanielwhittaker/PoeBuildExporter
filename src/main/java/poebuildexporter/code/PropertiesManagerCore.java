@@ -24,14 +24,38 @@ public class PropertiesManagerCore {
 
     private static final Logger log = LoggerFactory.getLogger(PropertiesManagerCore.class);
 
-    public static final String PROPERTIES_DIR = "properties/";
+    public static final String PROPERTIES_DIR;
     private static final Properties properties = new Properties();
     private static final Properties itemParsingProperties = new Properties();
     private static final Properties runeStatsProperties = new Properties();
     private static final Properties baseUserConfigProperties = new Properties();
     private static Set<String> uniqueItemWhitelist = Set.of();
     static {
+        PROPERTIES_DIR = resolvePropertiesDir();
         reloadProperties();
+    }
+
+    private static String resolvePropertiesDir() {
+        try {
+            Path codeSource = Paths.get(PropertiesManagerCore.class
+                    .getProtectionDomain().getCodeSource().getLocation().toURI());
+            log.info("Code source location: {}", codeSource);
+            Path jarDir = Files.isRegularFile(codeSource) ? codeSource.getParent() : codeSource;
+            for (Path candidate : new Path[]{jarDir, jarDir.getParent()}) {
+                if (candidate != null) {
+                    Path props = candidate.resolve("properties");
+                    log.info("Looking for properties at: {}", props);
+                    if (Files.isDirectory(props)) {
+                        log.info("Found properties directory at: {}", props);
+                        return props.toString() + File.separator;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            log.error("Failed to resolve properties directory from code source", e);
+        }
+        log.warn("Falling back to relative path: properties/");
+        return "properties" + File.separator;
     }
 
     public static void reloadProperties() {

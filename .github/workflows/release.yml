@@ -28,6 +28,7 @@ jobs:
           mkdir -p PoeBuildExporter-${{ github.ref_name }}/logs
           cp target/PoeBuildExporter-1.0-SNAPSHOT.jar PoeBuildExporter-${{ github.ref_name }}/
           cp -r properties PoeBuildExporter-${{ github.ref_name }}/
+          cp PoeBuildExporter.bat PoeBuildExporter-${{ github.ref_name }}/
 
       - name: Create zip
         run: zip -r PoeBuildExporter-${{ github.ref_name }}.zip PoeBuildExporter-${{ github.ref_name }}/
