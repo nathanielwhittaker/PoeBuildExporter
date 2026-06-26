@@ -84,9 +84,11 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
+                    <finalName>PoeBuildExporter-1.0-SNAPSHOT</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
                     <archive>
                         <manifest>
-                            <mainClass>TicketMaster.Main.Main</mainClass>
+                            <mainClass>poebuildexporter.code.App</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

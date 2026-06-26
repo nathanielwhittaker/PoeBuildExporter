@@ -45,4 +45,4 @@ build/
 properties/BaseUserConfig.properties
 
 ### Logs ###
-logs/
+logs/*.log
