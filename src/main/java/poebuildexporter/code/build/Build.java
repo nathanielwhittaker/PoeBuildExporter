@@ -40,10 +40,17 @@ public abstract class Build implements PoeGameVersionConfig {
         String lower = statText.toLowerCase().trim();
         if (lower.isEmpty()) return null;
         String suffix = suffixOf(lower);
+        boolean hasSupportedBy = lower.contains("supported by");
         for (StatMatchStrategy strategy : StatMatchStrategy.values()) {
             Stat best = null;
             for (Stat stat : allPossibleStats) {
                 if (preFilter.test(stat) && strategy.test(lower, suffix, stat)) {
+                    // Band-aid: prevents suffix/contains strategies from matching "supported by X" support gem stats
+                    // against item mods that merely share a suffix (e.g. flask "less duration" matching
+                    // "supported by less duration"). Needs a proper solution once one is thought of.
+                    // The root cause for the less duration modifier on flasks is due to that mod not existing
+                    // as an independent stat from the poe 1 stat data api.
+                    if (!hasSupportedBy && stat.getText().contains("supported by")) continue;
                     if (best == null || stat.getText().length() < best.getText().length()) best = stat;
                 }
             }
