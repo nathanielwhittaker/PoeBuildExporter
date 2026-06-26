@@ -1,0 +1,6 @@
+# Unique items listed here will have their stats fully parsed and included in trade queries.
+# All other unique items are queried by name and base type only.
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Watcher's Eye
+Mageblood
+
