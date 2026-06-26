@@ -38,8 +38,23 @@ public class PropertiesManagerCore {
         loadFile(properties,               "PathOfExileApiQuery.properties");
         loadFile(itemParsingProperties,    "ItemParsing.properties");
         loadFile(runeStatsProperties,      "RuneStats.properties");
+        ensureBaseUserConfig();
         loadFile(baseUserConfigProperties, "BaseUserConfig.properties");
         uniqueItemWhitelist = loadUniqueItemWhitelist();
+    }
+
+    private static void ensureBaseUserConfig() {
+        Path target = Paths.get(PROPERTIES_DIR + "BaseUserConfig.properties");
+        if (!Files.exists(target)) {
+            Path example = Paths.get(PROPERTIES_DIR + "BaseUserConfig.properties.example");
+            try {
+                Files.copy(example, target);
+                log.info("Created BaseUserConfig.properties from example — fill in your POESESSID and league settings.");
+            } catch (IOException e) {
+                log.error("Failed to create BaseUserConfig.properties from example", e);
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     private static Set<String> loadUniqueItemWhitelist() {

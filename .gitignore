@@ -43,3 +43,6 @@ build/
 
 ### Project secrets ###
 properties/BaseUserConfig.properties
+
+### Logs ###
+logs/

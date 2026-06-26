@@ -10,8 +10,7 @@ Reads Path of Exile builds from [pobb.in](https://pobb.in) URLs, queries the PoE
 
 ## Setup
 
-1. Copy `properties/BaseUserConfig.properties.example` to `properties/BaseUserConfig.properties`.
-2. Fill in your `POESESSID`, league name(s), and optionally set them from the GUI after launching.
+On first launch, `properties/BaseUserConfig.properties` is created automatically from the example file. Fill in your `POESESSID` and league name(s) there, or set them directly from the GUI after launching.
 
 ## Building
 
