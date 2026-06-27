@@ -37,12 +37,12 @@ public class ManualBuildImporter implements BuildImporter {
     }
 
     @Override
-    public List<String> getResults() {
-        List<String> results = new ArrayList<>();
+    public List<BuildImporterResult> getResults() {
+        List<BuildImporterResult> results = new ArrayList<>();
         for (JTextField field : fields) {
             String trimmed = field.getText().trim();
             if (!trimmed.isEmpty()) {
-                results.add(trimmed);
+                results.add(new BuildImporterResult(null, trimmed));
             }
         }
         return results;

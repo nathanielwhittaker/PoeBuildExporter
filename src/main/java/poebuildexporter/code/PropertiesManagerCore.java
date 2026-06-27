@@ -29,6 +29,7 @@ public class PropertiesManagerCore {
     private static final Properties itemParsingProperties = new Properties();
     private static final Properties runeStatsProperties = new Properties();
     private static final Properties baseUserConfigProperties = new Properties();
+    private static final Properties sessionOverrides = new Properties();
     private static Set<String> uniqueItemWhitelist = Set.of();
     static {
         PROPERTIES_DIR = resolvePropertiesDir();
@@ -93,6 +94,22 @@ public class PropertiesManagerCore {
         }
     }
 
+    public static void setSessionOverride(String key, String value) {
+        if (value == null || value.isBlank()) {
+            sessionOverrides.remove(key);
+        } else {
+            sessionOverrides.setProperty(key, value);
+        }
+    }
+
+    private static String getEffective(String key) {
+        String session = sessionOverrides.getProperty(key);
+        if (session != null && !session.isBlank()) {
+            return session;
+        }
+        return baseUserConfigProperties.getProperty(key);
+    }
+
     public static void setProperty(String filename, String key, String value) {
         Path path = Paths.get(PROPERTIES_DIR + filename);
         try {
@@ -130,7 +147,7 @@ public class PropertiesManagerCore {
     }
 
     public static String getPoeSessId() {
-        return baseUserConfigProperties.getProperty("POESESSID");
+        return getEffective("POESESSID");
     }
 
     public static void setPoeSessId(String value) {
@@ -154,7 +171,7 @@ public class PropertiesManagerCore {
     }
 
     public static String getLeague() {
-        return baseUserConfigProperties.getProperty("league");
+        return getEffective("league");
     }
 
     public static void setLeague(String value) {
@@ -162,7 +179,7 @@ public class PropertiesManagerCore {
     }
 
     public static String getLeaguePoe2() {
-        return baseUserConfigProperties.getProperty("leaguePoE2");
+        return getEffective("leaguePoE2");
     }
 
     public static void setLeaguePoe2(String value) {

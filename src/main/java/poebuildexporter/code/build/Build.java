@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import poebuildexporter.code.ItemData.Item;
 import poebuildexporter.code.ItemData.Stat;
+import poebuildexporter.code.importer.BuildImporterResult;
 
 //any future build types should extend this class and implement either poe1 or poe2 game version interface.
 public abstract class Build implements PoeGameVersionConfig {
@@ -18,8 +19,8 @@ public abstract class Build implements PoeGameVersionConfig {
         this.allPossibleBaseTypesWithLocalMods = getTradeBaseTypesWithLocalMods();
     }
 
-    public static Build of(BuildType type, String... args) {
-        return type.create(args);
+    public static Build of(BuildType type, BuildImporterResult importResult) {
+        return type.create(importResult);
     }
 
     public abstract String getName();

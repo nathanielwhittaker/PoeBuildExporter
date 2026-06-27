@@ -47,6 +47,7 @@ public class Item implements Serializable {
     public int links;
     public int ilvl;
     public Boolean corrupted;
+    public boolean foulborn;
     public int gemLevel;
     public int localBaseCrit;
     public int quality;
@@ -164,7 +165,11 @@ public static final Map<String, ItemDefenseSetter> defenseSetterMap = Map.of(
 	public Boolean getCorrupted() {
 		return corrupted;
 	}
-	
+
+	public boolean isFoulborn() {
+		return foulborn;
+	}
+
 	public int getGemLevel() {
 		return gemLevel;
 	}
@@ -187,6 +192,11 @@ public static final Map<String, ItemDefenseSetter> defenseSetterMap = Map.of(
         String rarity = statLines[0].substring("Rarity: ".length());
         String baseType = null;
         String name = statLines[1];
+        boolean foulborn = false;
+        if (name.toLowerCase().startsWith("foulborn ")) {
+            name = name.substring("foulborn ".length());
+            foulborn = true;
+        }
         List<String> extraStatsToIgnoreBecauseTheyAreLocal = List.of(
                 "to maximum energy shield",
                 "increased energy shield",
@@ -201,7 +211,7 @@ public static final Map<String, ItemDefenseSetter> defenseSetterMap = Map.of(
         if (!rarity.equalsIgnoreCase("MAGIC")) {
             startStatParseIndex = 3;
             baseType = statLines[2];
-            if (rarity.equalsIgnoreCase("UNIQUE") && !PropertiesManagerCore.getUniqueItemWhitelist().contains(name)) {
+            if (rarity.equalsIgnoreCase("UNIQUE") && !PropertiesManagerCore.getUniqueItemWhitelist().contains(name) && !foulborn) {
                 return new Item(name, rarity, baseType);
             }
         } else {
@@ -217,6 +227,7 @@ public static final Map<String, ItemDefenseSetter> defenseSetterMap = Map.of(
         }
 
         Item finalItem = new Item(name, rarity, baseType);
+        finalItem.foulborn = foulborn;
         List<Stat> allStatsOnThisItem = new ArrayList<>();
 
         // Pre-scan: collect socketed runes and find "Implicits: N"

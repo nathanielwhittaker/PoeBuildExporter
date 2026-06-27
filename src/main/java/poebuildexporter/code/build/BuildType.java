@@ -1,15 +1,17 @@
 package poebuildexporter.code.build;
 
+import poebuildexporter.code.importer.BuildImporterResult;
 import poebuildexporter.code.util.Web;
 
 public enum BuildType {
     POBBIN {
         @Override
-        public Build create(String... args) {
-            String url = args[0];
+        public Build create(BuildImporterResult importResult) {
+            String url = importResult.rawBuildImportData();
             String html = new Web(url).getResponse();
-            String name = Pobbin.parseNameFromHtml(html);
-            if (name.trim().endsWith("[PoE 2]")) {
+            String pobbinName = Pobbin.parseNameFromHtml(html);
+            String name = importResult.name() != null ? importResult.name() : pobbinName;
+            if (pobbinName.trim().endsWith("[PoE 2]")) {
                 return new Poe2Pobbin(url, name);
             }
             return new Poe1Pobbin(url, name);
@@ -21,7 +23,7 @@ public enum BuildType {
         }
     };
 
-    public abstract Build create(String... args);
+    public abstract Build create(BuildImporterResult importResult);
     public abstract boolean deriveCondition(String rawImportData);
 
     /**

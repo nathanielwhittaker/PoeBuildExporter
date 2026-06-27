@@ -7,7 +7,9 @@ import poebuildexporter.code.build.BuildType;
 import poebuildexporter.code.export.BuildExporter;
 import poebuildexporter.code.export.ExportType;
 import poebuildexporter.code.export.FileBuildExporter;
+import org.apache.commons.lang3.StringUtils;
 import poebuildexporter.code.importer.BuildImporter;
+import poebuildexporter.code.importer.BuildImporterResult;
 import poebuildexporter.code.poeapi.PathOfExileTradeApi;
 import poebuildexporter.code.poeapi.PathOfExileTradeApiResponse;
 import poebuildexporter.code.util.BuildUtils;
@@ -35,6 +37,7 @@ import java.awt.FlowLayout;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -210,9 +213,28 @@ public class BuildParserGui {
         }
     }
 
+
+    private record PropertiesFieldNameAndIsRequiredErrorMessage(String fieldName, String errorMsg) {}
+
+
     private void onRun() {
+        Map<PropertiesFieldNameAndIsRequiredErrorMessage, String> fieldToPropertyValueSetterMap = Map.of(
+                new PropertiesFieldNameAndIsRequiredErrorMessage("POESESSID", "POESESSID is required."), new String(sessIdField.getPassword()).trim(),
+                new PropertiesFieldNameAndIsRequiredErrorMessage("league", "PoE 1 league name is required."), leagueField.getText().trim(),
+                new PropertiesFieldNameAndIsRequiredErrorMessage("leaguePoE2", "PoE 2 league name is required."), leaguePoe2Field.getText().trim()
+        );
+
+        for(Map.Entry<PropertiesFieldNameAndIsRequiredErrorMessage, String> entry : fieldToPropertyValueSetterMap.entrySet()) {
+            if(StringUtils.isNotBlank(entry.getValue())) {
+                PropertiesManagerCore.setSessionOverride(entry.getKey().fieldName(), entry.getValue());
+            } else {
+                setStatus(entry.getKey().errorMsg(), Color.RED);
+                return;
+            }
+        }
+
         BuildImporter importer = (BuildImporter) importerCombo.getSelectedItem();
-        List<String> importerResults = importer.getResults();
+        List<BuildImporterResult> importerResults = importer.getResults();
         if (importerResults.isEmpty()) {
             setStatus("No build importerResults provided.", Color.ORANGE);
             return;
