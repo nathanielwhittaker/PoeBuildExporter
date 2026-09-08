@@ -146,7 +146,7 @@ Trade API endpoints. These rarely need changing unless GGG updates their API pat
 | `tradeApiSearchUrlPoE2` | PoE 2 trade search POST URL. |
 | `tradeWebSearchUrl` | PoE 1 trade website URL (used to build hyperlinks in the export). |
 | `tradeWebSearchUrlPoE2` | PoE 2 trade website URL. |
-| `tradeApiRequestDelayMs` | Milliseconds to wait between trade API requests. Default `10000`. Lower values risk rate limiting. |
+| `tradeApiRequestDelayMs` | Milliseconds to wait between trade API requests. Default `8000`. Lower values risk rate limiting. |
 
 ---
 

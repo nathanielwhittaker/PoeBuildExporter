@@ -195,7 +195,7 @@ public class PropertiesManagerCore {
     }
 
     public static long getTradeApiRequestDelayMs() {
-        return Long.parseLong(properties.getProperty("tradeApiRequestDelayMs", "3000"));
+        return Long.parseLong(properties.getProperty("tradeApiRequestDelayMs", "8000"));
     }
 
     public static String getTradeWebSearchUrl() {
