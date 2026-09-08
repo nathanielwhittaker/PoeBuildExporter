@@ -1,6 +1,28 @@
 # PoeBuildExporter
 
-Reads Path of Exile builds from [pobb.in](https://pobb.in) URLs, queries the PoE trade API for each item in the build, and exports the results to a spreadsheet.
+A desktop app that prices out entire Path of Exile builds at once. Point it at
+[pobb.in](https://pobb.in) build URLs and it parses every item in each build,
+queries the official PoE trade API for matching listings (rate-limited to be a
+good citizen), and exports a spreadsheet — one sheet per build, with item stats,
+listing counts, and a ready-made trade-site hyperlink for every item.
+
+![PoeBuildExporter screenshot](docs/screenshot.png)
+
+**Stack:** Java 17 · Swing + FlatLaf · OkHttp · Jackson · Apache POI (xlsx) ·
+Maven · tagged releases via GitHub Actions
+
+## Features
+
+- **Supports Path of Exile 1 and 2** — separate build parsers, trade endpoints,
+  and leagues, including PoE 2 socketed-rune stat mapping.
+- **Batch import** — paste URLs manually, or import a whole list from `.txt`,
+  `.csv`, or `.xlsx`.
+- **Smart trade queries** — stat rolls are queried at a configurable fraction of
+  the build's roll (default 85%) so searches find realistic listings; named
+  uniques (e.g. Watcher's Eye) can be fully stat-parsed for precision.
+- **Spreadsheet export** — one sheet per build: name, base, rarity, iLvl, links,
+  PDPS/EDPS, defences, total listings, and a clickable trade URL per item.
+- **Rate-limit aware** — configurable delay between trade API requests.
 
 ## Requirements
 
