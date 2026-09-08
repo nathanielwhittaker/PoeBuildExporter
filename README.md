@@ -24,6 +24,28 @@ Maven · tagged releases via GitHub Actions
   PDPS/EDPS, defences, total listings, and a clickable trade URL per item.
 - **Rate-limit aware** — configurable delay between trade API requests.
 
+## Example
+
+**Input** — one or more pobb.in build URLs (pasted, or imported from a file):
+
+```
+https://pobb.in/ET47jTCru3eD
+```
+
+**Output** — an `.xlsx` with one sheet per build. A real excerpt (PoE 1 build):
+
+| Item Name | Base Type | Rarity | iLvl | Links | ES | Evasion | Total Listings | Trade URL |
+|---|---|---|---|---|---|---|---|---|
+| Beast Jack | Necrotic Armour | RARE | 91 | 6 | 736 | 3606 | 0 | [trade search](https://www.pathofexile.com/trade/search/) |
+| The Gull | Raven Mask | UNIQUE | — | — | — | — | 10000 | [trade search](https://www.pathofexile.com/trade/search/) |
+| Kalandra's Touch | Ring | UNIQUE | — | — | — | — | 365 | [trade search](https://www.pathofexile.com/trade/search/) |
+| Dusk Tread | Warlock Boots | RARE | 94 | 4 | 341 | — | 3 | [trade search](https://www.pathofexile.com/trade/search/) |
+
+(The full export also includes PDPS/EDPS/Armour columns; PoE 2 builds link to the
+PoE 2 trade site instead.) Each Trade URL is a saved search for that exact item's
+stats — a **Total Listings** of 0 or 3 tells you at a glance which pieces of the
+build are the hard-to-buy ones before you commit to it.
+
 ## Requirements
 
 - Java 17+
